@@ -1,0 +1,20 @@
+Project Title:
+--------------
+"Data-Driven Retail and Supply Chain Demand Forecasting: Optimizing Inventory Levels and Mitigating Stockouts Using Hybrid Machine Learning and Market Trends"
+
+Problem Definition: 
+----------------------
+Manufacturing and retail supply chains frequently suffer from inefficiencies due to inaccurate demand planning, leading to either costly overproduction (surplus holding costs) or critical stockouts (lost revenue and customer dissatisfaction).
+
+Purpose: 
+--------
+To build a robust, data-driven forecasting framework that predicts product demand by combining historical sales patterns with external market dynamics (such as competitor pricing, promotions, weather conditions, and seasonal factors) to automate optimal inventory planning and purchasing decisions.
+
+What are you trying to forecast?
+----------------------------------
+Target Variable: The specific Demand volume (units required) for products across different stores and categories, which directly informs optimal Units Ordered and helps maintain safe Inventory Levels to prevent both stockouts and overproduction.
+
+Data
+------
+A comprehensive, multi-variable dataset (demand_forecasting.csv) has already been sourced and verified.
+Link: https://www.kaggle.com/datasets/raminhuseyn/demand-forecasting-dataset/data
