@@ -9,16 +9,19 @@
 = df.nunique()
 = df.head()
 = df.tail()
-
-
-- distributions
+= Distributions
 
 -------------------------------------------
 📊 Phase 2: Preprocessing 
 -------------------------------------------
 
-= parsing date fields - Convert Date column to datetime format
-
+= check_missing_values
+= handle_duplicates
+= parse_and_sort_dates
+= sanitize_categoricals
+= validate_numeric_bounds
+= manage_outliers
+        
 -------------------------------------------
 🛠️ Phase 3: Feature Engineering
 -------------------------------------------
@@ -33,16 +36,15 @@
 = Rolling Window Statistics
 = Competitive Pricing Shift Features (Fixed missing subtraction 
 = Handle NaN values generated from shifts/rolling windows
-= One-Hot Encoding for nominal features
-= Scale numerical continuous variables
-= Strict time-based split to prevent data leakage
+
 
 -------------------------------------------
 🛠️ Phase 4: Encoding 
 -------------------------------------------
 – Handling categorical variables (Category, Region, Weather Condition, Seasonality)
 - preparing numerical features.
-
+= One-Hot Encoding for nominal features
+= Scale numerical continuous variables
 -------------------------------------------
 🤖 Phase 4: Model Training 
 -------------------------------------------
