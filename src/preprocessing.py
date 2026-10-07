@@ -43,7 +43,8 @@ class DataPreprocessingPipeline:
         self.printm('Sanitizing categorical text fields...')
         cat_cols = ['Category', 'Region', 'Weather Condition', 'Seasonality']
         for col in cat_cols:
-            df[col] = df[col].astype(str).str.strip().str.title()
+            if col in df.columns:
+                df[col] = df[col].astype(str).str.strip().str.title()
         return df
 
     def validate_numeric_bounds(self, df):

@@ -1,4 +1,57 @@
+-------------------------------------------
+📊 Phase 1: Exploratory Data Analysis (EDA)
+-------------------------------------------
+= df.shape -no of rows and columns
+= df.info() - Inspecting data types, not null values
+= df.describe() - min, max, mean, std, 25%, 50%, 75% 
+= df.isnull().sum()
+= df.duplicated().sum()
+= df.nunique()
+= df.head()
+= df.tail()
 
+
+- distributions
+
+-------------------------------------------
+📊 Phase 2: Preprocessing 
+-------------------------------------------
+
+= parsing date fields - Convert Date column to datetime format
+
+-------------------------------------------
+🛠️ Phase 3: Feature Engineering
+-------------------------------------------
+– Handling categorical variables (Category, Region, Weather Condition, Seasonality)
+- preparing numerical features.
+
+= Temporal & Cyclical Features
+= Cyclical Encoding (Fixed missing '*' and markdown bullets)
+= Fourier Terms for Multi-Year Seasonality (Fixed missing subtraction '
+= Grouped Lag & Rolling Window Features (Per Store & Product)
+= Lag Features (Past Demand)
+= Rolling Window Statistics
+= Competitive Pricing Shift Features (Fixed missing subtraction 
+= Handle NaN values generated from shifts/rolling windows
+= One-Hot Encoding for nominal features
+= Scale numerical continuous variables
+= Strict time-based split to prevent data leakage
+
+-------------------------------------------
+🛠️ Phase 4: Encoding 
+-------------------------------------------
+– Handling categorical variables (Category, Region, Weather Condition, Seasonality)
+- preparing numerical features.
+
+-------------------------------------------
+🤖 Phase 4: Model Training 
+-------------------------------------------
+– Building baseline and advanced regression/machine learning models (such as Random Forest or XGBoost) to predict Demand.
+
+-------------------------------------------
+📈 Phase 5: Evaluation & Optimization 
+-------------------------------------------
+– Assessing performance using metrics like RMSE and MAE, and tuning hyperparameters.
 
 
 
