@@ -1,0 +1,142 @@
+```python
+import pandas as pd
+df = pd.read_csv('demand_forecasting.csv')
+print(df.dtypes)
+print(df.nunique())
+
+
+```
+
+```text
+Date                   object
+Store ID               object
+Product ID             object
+Category               object
+Region                 object
+Inventory Level         int64
+Units Sold              int64
+Units Ordered           int64
+Price                 float64
+Discount                int64
+Weather Condition      object
+Promotion               int64
+Competitor Pricing    float64
+Seasonality            object
+Epidemic                int64
+Demand                  int64
+dtype: object
+Date                    760
+Store ID                  5
+Product ID               20
+Category                  5
+Region                    4
+Inventory Level        1426
+Units Sold              330
+Units Ordered           996
+Price                 15396
+Discount                  6
+Weather Condition         4
+Promotion                 2
+Competitor Pricing    15963
+Seasonality               4
+Epidemic                  2
+Demand                  340
+dtype: int64
+
+
+```
+
+Here is a clear, layman-friendly breakdown of every column in your **`demand_forecasting.csv`** dataset, along with the business logic behind why it matters for retail and supply chain management.
+
+---
+
+### 1. Identifiers & Context (Who, Where, and When)
+
+* **`Date`**
+* **What it is:** The specific calendar date of the record (ranging daily from January 2022 to January 2024).
+* **Business Logic:** Retail demand changes by day of the week, month, and year. This allows the model to learn seasonal buying habits (e.g., higher weekend sales or winter holiday rushes).
+
+
+* **`Store ID`**
+* **What it is:** A unique code for each physical store location (there are 5 stores in total).
+* **Business Logic:** Different stores have different customer foot traffic, local demographics, and regional sizes, so demand must be tracked per individual store.
+
+
+* **`Product ID` & `Category**`
+* **What it is:** `Product ID` is the unique code for a specific item (20 unique products), and `Category` groups them into broader groups (e.g., Electronics, Clothing, Groceries).
+* **Business Logic:** Products sell at different rates. Grouping by category helps the model understand if an entire department (like winter clothing or groceries) is trending up or down together.
+
+
+* **`Region`**
+* **What it is:** The geographical territory where the store is located (e.g., North, South, East, West).
+* **Business Logic:** Regional differences dictate local preferences, climate reactions, and purchasing power.
+
+
+
+---
+
+### 2. Operational & Inventory Metrics (What is Happening Inside the Store)
+
+* **`Inventory Level`**
+* **What it is:** The physical stock count of the product available on the store shelves or warehouse at that time.
+* **Business Logic:** If inventory hits zero, a **stockout** occurs, leading to lost sales and disappointed customers. Monitoring this helps balance holding too much stock (which costs money) versus too little.
+
+
+* **`Units Sold`**
+* **What it is:** The actual number of units purchased by customers on that specific day.
+* **Business Logic:** Represents historical sales velocity, serving as a primary signal of consumer demand.
+
+
+* **`Units Ordered`**
+* **What it is:** The number of new units requested or restocked from suppliers/warehouses on that day.
+* **Business Logic:** Reflects supply chain procurement decisions. Matching orders to true demand prevents over-ordering or inventory shortages.
+
+
+
+---
+
+### 3. Pricing & Promotions (The Financial Levers)
+
+* **`Price`**
+* **What it is:** The retail selling price of the product on that day.
+* **Business Logic:** Price elasticity dictates that when prices go up, demand usually goes down, and vice versa.
+
+
+* **`Competitor Pricing`**
+* **What it is:** The price charged by local competitors for the same or a similar product.
+* **Business Logic:** If your competitor drops their price significantly below yours, your demand will likely take a hit unless you respond.
+
+
+* **`Discount` & `Promotion**`
+* **What it is:** `Discount` is the percentage cut off the price (e.g., 5%, 10%), and `Promotion` is a simple yes/no flag ($0$ or $1$) indicating whether a marketing campaign or special event was active.
+* **Business Logic:** Promotions and discounts trigger temporary spikes in customer demand, which models must account for so they don't mistake a promo surge for permanent growth.
+
+
+
+---
+
+### 4. External Market Dynamics (The Environment)
+
+* **`Weather Condition`**
+* **What it is:** The local weather on that day (e.g., Snowy, Rainy, Sunny, Cloudy).
+* **Business Logic:** Weather heavily alters buying behavior (e.g., rainy days might spike umbrella sales or drop foot traffic, while winter snow changes apparel choices).
+
+
+* **`Seasonality`**
+* **What it is:** The overarching season label (e.g., Winter, Summer, Spring, Autumn).
+* **Business Logic:** Captures macro-seasonal shifts that affect product utility throughout the year.
+
+
+* **`Epidemic`**
+* **What it is:** A binary flag ($0$ or $1$) indicating the presence or absence of a macro health crisis or disruption event.
+* **Business Logic:** Acts as an external shock variable that models can use to recognize abnormal drops or shifts in consumer mobility and retail demand.
+
+
+
+---
+
+### 5. The Core Target
+
+* **`Demand`**
+* **What it is:** The true total customer requirement or market demand for the product on that day.
+* **Business Logic:** This is your **Target Variable** (what you are trying to predict). Accurately forecasting this number allows businesses to optimize `Units Ordered` and maintain safe `Inventory Levels`, avoiding both expensive overproduction and costly stockouts.
