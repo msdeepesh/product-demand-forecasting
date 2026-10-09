@@ -1,14 +1,14 @@
 
 
 import importlib
-import utils
+import common.utils as utils
 
 ######################
 # Pre-Requsites Check
 ######################
 importlib.reload(utils)
 utils.confirm_setup(
-    "Have you read 'Pre-requisites.txt' and installed the required packages? (yes/no): "
+    "Have you read 'text_files/Pre-requisites.txt' and installed the required packages? (yes/no): "
 )
 
 ##################
@@ -21,9 +21,9 @@ if df is None:
 ##########################################
 # EDA (Exploratory Data Analysis) PIPELINE
 ##########################################
-import eda_pipeline
+import pipeline_classes.eda_pipeline as eda_pipeline
 importlib.reload(eda_pipeline)
-from eda_pipeline import EDAPipeline
+from pipeline_classes.eda_pipeline import EDAPipeline
 
 eda_pipe = EDAPipeline()
 df = eda_pipe.run(df)
@@ -31,9 +31,9 @@ df = eda_pipe.run(df)
 ##################################
 # PREPROCESSING PIPELINE
 ##################################
-import preprocessing
+import pipeline_classes.preprocessing as preprocessing
 importlib.reload(preprocessing)
-from preprocessing import DataPreprocessingPipeline
+from pipeline_classes.preprocessing import DataPreprocessingPipeline
 
 pipeline = DataPreprocessingPipeline()
 df = pipeline.fit_transform(df)
@@ -42,9 +42,9 @@ df = pipeline.fit_transform(df)
 # FEATURE ENGINEERING PIPELINE
 ##################################
 
-import feature_engineering
+import pipeline_classes.feature_engineering as feature_engineering
 importlib.reload(feature_engineering)
-from feature_engineering import FeatureEngineeringPipeline
+from pipeline_classes.feature_engineering import FeatureEngineeringPipeline
 
 feature_pipeline = FeatureEngineeringPipeline()
 df = feature_pipeline.fit_transform(df)
@@ -52,9 +52,9 @@ df = feature_pipeline.fit_transform(df)
 ####################
 # TRAINING PIPELINE
 ####################
-import training_testing_pipeline
+import pipeline_classes.training_testing_pipeline as training_testing_pipeline
 importlib.reload(training_testing_pipeline)
-from training_testing_pipeline import TrainingTestingPipeline
+from pipeline_classes.training_testing_pipeline import TrainingTestingPipeline
 
 training_pipeline = TrainingTestingPipeline()
 rf_model, X_train, X_test, y_train, y_test = training_pipeline.run(df)
@@ -62,9 +62,9 @@ rf_model, X_train, X_test, y_train, y_test = training_pipeline.run(df)
 ############################
 # MODEL EVALUATION PIPELINE
 ############################
-import model_evaluation_pipeline
+import pipeline_classes.model_evaluation_pipeline as model_evaluation_pipeline
 importlib.reload(model_evaluation_pipeline)
-from model_evaluation_pipeline import ModelEvaluationPipeline
+from pipeline_classes.model_evaluation_pipeline import ModelEvaluationPipeline
 
 evaluation_pipeline = ModelEvaluationPipeline()
 evaluation_metrics = evaluation_pipeline.run(rf_model, X_test, y_test)
@@ -72,9 +72,9 @@ evaluation_metrics = evaluation_pipeline.run(rf_model, X_test, y_test)
 ####################
 # MODEL PERSISTENCE
 ####################
-import model_persistence_pipeline
+import pipeline_classes.model_persistence_pipeline as model_persistence_pipeline
 importlib.reload(model_persistence_pipeline)
-from model_persistence_pipeline import ModelPersistencePipeline
+from pipeline_classes.model_persistence_pipeline import ModelPersistencePipeline
 
 persistence_pipeline = ModelPersistencePipeline()
 persistence_pipeline.run(rf_model, X_train.columns.tolist())
@@ -82,4 +82,4 @@ persistence_pipeline.run(rf_model, X_train.columns.tolist())
 #################
 # POST EXECUTION 
 #################
-utils.open_file("Post execution.txt")
+utils.open_file("text_files/Post execution.txt")

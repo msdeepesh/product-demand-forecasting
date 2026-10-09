@@ -2,6 +2,9 @@ import joblib
 import numpy as np
 import pandas as pd
 import streamlit as st
+from pathlib import Path
+
+ARTIFACT_DIR = Path(__file__).resolve().parent / "model_artifacts"
 
 # Set page configuration
 st.set_page_config(
@@ -13,8 +16,8 @@ st.set_page_config(
 # Load the trained model and features
 @st.cache_resource
 def load_assets():
-  model = joblib.load("demand_rf_model.pkl")
-  model_features = joblib.load("model_features.pkl")
+    model = joblib.load(ARTIFACT_DIR / "demand_rf_model.pkl")
+    model_features = joblib.load(ARTIFACT_DIR / "model_features.pkl")
   return model, model_features
 
 

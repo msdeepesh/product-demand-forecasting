@@ -20,12 +20,14 @@ src/
     ├── feature_engineering.py
     ├── preprocessing.py
     ├── project_demand_forecasting.py
-    ├── utils.py
+    ├── common/
+    │   └── utils.py
     ├── eda_minimal_distribution_charts.png (POST EXECUTION)
     ├── eda_visualizations.png (POST EXECUTION)
-    ├── Post execution.txt
-    ├── Post execution.txt
-    ├── Pre-requisites.txt
-    ├── demand_rf_model.pkl
-    ├── model_features.pkl
-    ├── requirements.txt
+    ├── model_artifacts/
+    │   ├── demand_rf_model.pkl
+    │   └── model_features.pkl
+    ├── text_files/
+    │   ├── Post execution.txt
+    │   ├── Pre-requisites.txt
+    │   └── requirements.txt

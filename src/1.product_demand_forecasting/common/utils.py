@@ -9,7 +9,7 @@ import pandas as pd
 def confirm_setup(message):
     setup_confirmed = input(message).strip().lower()
     if setup_confirmed not in {"yes", "y"}:
-        open_file("Pre-requisites.txt")
+        open_file("text_files/Pre-requisites.txt")
         raise SystemExit(0)
 
 
@@ -40,8 +40,8 @@ def print_info(msg, df):
 
 
 def load_dataset():
-    script_dir = Path(__file__).resolve().parent.parent
-    csv_path = script_dir.parent / 'data' / 'demand_forecasting.csv'
+    repo_root = Path(__file__).resolve().parents[3]
+    csv_path = repo_root / 'data' / 'demand_forecasting.csv'
     try:
         df = pd.read_csv(csv_path)
     except FileNotFoundError:

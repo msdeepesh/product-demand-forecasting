@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from pathlib import Path
+
+IMAGE_OUTPUT_DIR = Path(__file__).resolve().parent.parent / "images"
 
 class EDAPipeline:
     def __init__(self, printm_func=None):
@@ -70,8 +73,9 @@ class EDAPipeline:
             axes[-1].axis('off')
 
         plt.tight_layout()
-        plt.savefig("eda_minimal_distribution_charts.png")
-        self.printm("\n2.10.1) Distribution charts saved successfully as 'eda_minimal_distribution_charts.png'!")
+        IMAGE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        plt.savefig(IMAGE_OUTPUT_DIR / "eda_minimal_distribution_charts.png")
+        self.printm("\n2.10.1) Distribution charts saved successfully in 'images/eda_minimal_distribution_charts.png'!")
         return df
     
     def visualization_charts(self, df):
@@ -115,8 +119,9 @@ class EDAPipeline:
         axes[1, 1].set_title("Correlation Matrix")
 
         plt.tight_layout()
-        plt.savefig("eda_visualizations.png")
-        print("\n2.11.1)Visualization charts saved successfully as 'eda_visualizations.png'!")
+        IMAGE_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        plt.savefig(IMAGE_OUTPUT_DIR / "eda_visualizations.png")
+        print("\n2.11.1)Visualization charts saved successfully in 'images/eda_visualizations.png'!")
 
     def run(self, df):
         self.printm('\n2)Starting EDA pipeline...')
