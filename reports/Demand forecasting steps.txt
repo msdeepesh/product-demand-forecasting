@@ -1,197 +1,43 @@
--------------------------------------------
-📊 Phase 1: Exploratory Data Analysis (EDA)
--------------------------------------------
-= df.shape -no of rows and columns
-= df.info() - Inspecting data types, not null values
-= df.describe() - min, max, mean, std, 25%, 50%, 75% 
-= df.isnull().sum()
-= df.duplicated().sum()
-= df.nunique()
-= df.head()
-= df.tail()
-= Distributions
+ Phase 1: Data Preprocessing & Exploratory Data Analysis (EDA)
 
--------------------------------------------
-📊 Phase 2: Preprocessing 
--------------------------------------------
+Before training any models, you need to clean and understand the structure of your dataset (`demand_forecasting.csv`, which contains 76,000 rows and 16 variables like `Date`, `Store ID`, `Category`, `Price`, `Weather Condition`, and `Demand`).
 
-= check_missing_values
-= handle_duplicates
-= parse_and_sort_dates
-= sanitize_categoricals
-= validate_numeric_bounds
-= manage_outliers
-        
--------------------------------------------
-🛠️ Phase 3: Feature Engineering
--------------------------------------------
-– Handling categorical variables (Category, Region, Weather Condition, Seasonality)
-- preparing numerical features.
+ Data Cleaning: Handle missing values, check for duplicate rows, and convert the `Date` column into a proper datetime format to extract temporal features.
+ Exploratory Data Analysis (EDA): Use Python libraries (Pandas, Seaborn, Matplotlib) to visualize correlations between external factors (e.g., `Discount`, `Promotion`, `Competitor Pricing`, `Weather Condition`) and the target variable `Demand`.
+ Outlier Detection: Identify anomalies in `Inventory Level` and `Units Sold` to prevent skewed model training.
 
-= Temporal & Cyclical Features
-= Cyclical Encoding (Fixed missing '*' and markdown bullets)
-= Fourier Terms for Multi-Year Seasonality (Fixed missing subtraction '
-= Grouped Lag & Rolling Window Features (Per Store & Product)
-= Lag Features (Past Demand)
-= Rolling Window Statistics
-= Competitive Pricing Shift Features (Fixed missing subtraction 
-= Handle NaN values generated from shifts/rolling windows
+ Phase 2: Feature Engineering & Selection
 
+To capture historical patterns and external market dynamics, transform the raw variables into powerful features:
 
--------------------------------------------
-🛠️ Phase 4: Encoding 
--------------------------------------------
-– Handling categorical variables (Category, Region, Weather Condition, Seasonality)
-- preparing numerical features.
-= One-Hot Encoding for nominal features
-= Scale numerical continuous variables
--------------------------------------------
-🤖 Phase 4: Model Training 
--------------------------------------------
-– Building baseline and advanced regression/machine learning models (such as Random Forest or XGBoost) to predict Demand.
+ Temporal Features: Extract Year, Month, Day, Day of the Week, and Is_Weekend from the `Date` column. Encode categorical variables like `Seasonality`, `Region`, `Category`, and `Weather Condition` using One-Hot Encoding or Label Encoding.
+ Lag & Rolling Features: Create lagged demand features (e.g., demand from 1 week or 1 month prior) and rolling averages (moving windows) to capture sales trends over time.
+ Interaction Features: Calculate price differentials (`Price` vs `Competitor Pricing`) and net promotional impact.
 
--------------------------------------------
-📈 Phase 5: Evaluation & Optimization 
--------------------------------------------
-– Assessing performance using metrics like RMSE and MAE, and tuning hyperparameters.
+ Phase 3: Model Development & Training
 
+Build and train multiple machine learning models so that users can compare their performance on the web interface:
 
+ Baseline Models: Implement traditional statistical or baseline models such as Linear Regression or Ridge/Lasso.
+ Advanced Tree-Based Models: Train robust ensemble models like Random Forest, XGBoost, LightGBM, and CatBoost, which excel at handling tabular data and non-linear feature interactions.
+ Hybrid / Time-Series Approach: Combine traditional time-series methods (like ARIMA or Prophet) with machine learning residuals, or ensemble tree models with deep learning architectures (like LSTM) for sequential forecasting.
+ Model Persistence: Save the trained models using Python's `joblib` or `pickle` library so they can be loaded instantly in the web application.
 
+ Phase 4: Web Application Development (UI for Model Selection)
 
+Create an interactive web interface (using Streamlit for rapid prototyping or Flask/Django for a full-stack web application) that fulfills your project requirement of selecting models to predict demand:
 
+ Frontend Interface: Design input forms where users can select a specific `Store ID`, `Product ID`, `Category`, `Region`, `Price`, `Discount`, `Weather Condition`, and `Promotion` status, or upload a CSV batch file.
+ Model Selector Dropdown: Implement a dropdown menu allowing users to choose which model to run (e.g., XGBoost, Random Forest, LightGBM).
+ Prediction & Optimization Output: Display the predicted `Demand` volume alongside automated inventory recommendations, such as optimal `Units Ordered` and safe `Inventory Levels` to prevent stockouts.
+ Visualizations: Render interactive plots (using Plotly or Matplotlib) showing historical demand trends vs. predicted forecasts.
 
+ Phase 5: Evaluation, Documentation, & Deployment
 
+ Performance Metrics: Evaluate your models using standard regression metrics: Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and R-Squared ($R^2$).
+ Documentation & Report: Compile your findings, model comparison tables, feature importance graphs, and system architecture diagrams into a final project report.
+ Deployment: Host the web application locally or deploy it to cloud platforms like Streamlit Community Cloud, Render, or Heroku for easy demonstration.
 
+---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-==================================================================================================================
-2. Data Collection & Preparation
-
-Historical Sales Data: 
-- Yes. Extensive historical sales and demand records spanning from January 1, 2022, to January 30, 2024 (76,000 total records across 5 stores and 20 products).
-
-Shipment records:
-- No
-
-Multi-year seasonality:
-Yes
-- Absolute Date & Year-Month Components
-- Cyclical Fourier Terms (Harmonics)
-- Multi-Seasonality Decomposition (STL / Prophet-style)
-- Year-over-Year (YoY) Lag Features
-
-Macroeconomic indicators:
-- Yes.Epidemic: A binary flag ($0$ or $1$) indicating the presence or absence of an epidemic shock event.
-- merge external time-series data
-
-Competitor pricing shifts
-- Yes.There are frequent, dynamic shifts in Competitor Pricing throughout the dataset.
-
-Promotional calendars:
-Promotion: A binary indicator column ($0$ or $1$) showing whether an active marketing promotion or campaign was running for that product at that store on a given date (active in 25,000 out of 76,000 rows).
-Discount: A numeric column specifying the percentage or value of the discount applied on that date (ranging from 0% to 25%).
-
-
-Data Cleansing: 
-- Numeric columns
--- no missing values
--- no duplicate rows
--- no negative numbers in numerical columns
-
-Remove outliers caused by one-off events (e.g., severe supply chain shocks) and aggregate data into consistent weekly or monthly intervals.
-
-Key Data Cleansing Steps Needed
-Datetime Parsing & Chronological Sorting:
-
-Convert the Date column from string format into standard datetime objects.
-
-Sort the dataset chronologically by Store ID, Product ID, and Date. Time-series models require strict chronological order to prevent data leakage and correctly compute historical trends.
-
-Logical Consistency Checks (Sanity Checks):
-
-Inventory vs. Sales Flow: Ensure logical relationships between units sold, orders, and inventory levels (e.g., verifying that inventory shifts make operational sense over time).
-
-Outlier Treatment: Check for extreme statistical outliers in Demand or Price (e.g., values falling beyond 3 standard deviations or extreme spikes caused by data entry errors).
-
-Categorical Sanitization:
-
-Standardize text formatting (strip whitespace, ensure consistent casing) for categorical columns like Category, Region, Weather Condition, and Seasonality.
-
-Handling Lag/Rolling Missing Values:
-
-When you generate rolling averages or lag features (like demand from 7 days ago), the first few rows for each store-product combination will naturally evaluate as NaN (missing). These must be cleaned via backfilling or dropping to prevent model errors.
--------------------------------
-
-
-1. Temporal Conversion & Sorting
-Parse Date Column: Convert the Date column from string type to standard datetime objects (pd.to_datetime).
-
-Chronological Sorting: Sort the dataframe by date and identifier keys (Store ID, Product ID) to ensure time-series integrity and prevent data leakage during splitting.
-
-Extract Time-Series Features: Extract granular components from the date to help tree-based models capture seasonal cycles:
-
-Calendar Features: Month, Day of Week, Day of Month, and Week of Year.
-
-Cyclical Encoding: Apply sine and cosine transformations to cyclic variables like Month or Day of Week so models understand that December is close to January.
-
-2. Categorical Encoding
-One-Hot Encoding or Ordinal Encoding: Convert high-cardinality or nominal categorical features into numeric formats.
-
-Nominal features like Category, Region, and Weather Condition should be one-hot encoded.
-
-Seasonality can be mapped ordinally or via one-hot encoding.
-
-Target Encoding / Frequency Encoding: For identifiers like Store ID and Product ID, consider target encoding (mean demand per store/product) or frequency encoding to keep dimensionality manageable if you aren't using embeddings.
-
-3. Missing Value & Anomaly Checks
-Although basic counts show no null values, run structural checks for implicit missing data (e.g., gaps in dates for specific store-product combinations).
-
-Check for duplicate rows or negative values in continuous columns like Price, Inventory Level, and Units Sold.
-
-4. Feature Engineering (Time-Series & Lags)
-Because this is a demand forecasting problem, historical context is critical for models to learn trends:
-
-Lag Features: Create lag variables for the target variable (Demand) and past sales (e.g., lag of 1 week, 2 weeks, or 1 month) grouped by Store ID and Product ID.
-
-Rolling Window Statistics: Compute rolling means and standard deviations (e.g., 7-day or 30-day rolling averages of demand) to capture short-term trends and volatility.
-
-Price Difference Features: Compute the price delta between your Price and Competitor Pricing to capture competitive positioning.
-
-5. Data Splitting (Time-Based Split)
-Avoid Random Splits: Never use random K-Fold cross-validation or standard random train-test splits on time-series data, as it causes look-ahead bias.
-
-Sequential Split: Split the data chronologically (e.g., train on data from 2022 through mid-2025, validate/test on the final months) to simulate real-world forecasting performance.
-
-6. Feature Scaling
-If you plan to use models sensitive to feature magnitudes (such as Neural Networks, Support Vector Regressors, or Linear/Ridge regression), apply Standardization (StandardScaler) or Normalization (MinMaxScaler) on continuous numerical columns (Price, Competitor Pricing, Inventory Level). Tree-based models (like XGBoost, LightGBM, or Random Forest) can skip this step.
-
------------------
-
-
-3. Model Selection & Implementation
-
-Time Series Models: Use traditional statistical methods like ARIMA or Exponential Smoothing for stable product lines with clear seasonal patterns.
-Machine Learning Models: Implement advanced algorithms like Random Forest, Gradient Boosting, or XGBoost to capture complex, non-linear relationships with market drivers.
-Feature Engineering: Create lag variables, rolling window averages, and calendar markers (holidays, paydays) to enrich the feature set.
-
-
-
-4. Evaluation & Continuous Improvement
-
-Error Metrics: Assess model accuracy using Mean Absolute Percentage Error (MAPE) or Root Mean Square Error (RMSE) against a validation dataset.
-Scenario Testing: Simulate demand spikes and supply bottlenecks to ensure production plans remain resilient.
-Feedback Loops: Continuously retrain the model with fresh sales data to adapt to changing consumer behaviors.
-
-
+Would you like a starter Python script to set up the data cleaning and exploratory data analysis for `demand_forecasting.csv`?

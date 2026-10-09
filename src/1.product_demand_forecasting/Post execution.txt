@@ -1,0 +1,31 @@
+
+------------------
+EDA chart details
+------------------
+
+Saved as image files .
+├── eda_minimal_distribution_charts.png (POST EXECUTION)
+├── eda_visualizations.png (POST EXECUTION)
+
+
+
+-----------------
+Folder structure
+-----------------
+data/
+├──demand_forecasting.csv
+src/
+├──product_demand_forecasting/
+    ├── eda_pipeline.py
+    ├── feature_engineering.py
+    ├── preprocessing.py
+    ├── project_demand_forecasting.py
+    ├── utils.py
+    ├── eda_minimal_distribution_charts.png (POST EXECUTION)
+    ├── eda_visualizations.png (POST EXECUTION)
+    ├── Post execution.txt
+    ├── Post execution.txt
+    ├── Pre-requisites.txt
+    ├── demand_rf_model.pkl
+    ├── model_features.pkl
+    ├── requirements.txt

@@ -1,0 +1,21 @@
+
+----------------
+Pre-requisites:
+----------------
+1) Python (install from web if not installed)
+2) Python packages
+2.1) Navigate to the source directory where the main code is placed
+2.2) pip install -r requirements.txt
+2.2.1) Make sure there are no errors
+
+
+-----------------
+Run instructions:
+-----------------
+1) From command prompt or Visual Studio code, run below command
+1.1) 'streamlit project_demand_forecasting.py'
+2) Open saved image files to see EDA.
+- eda_minimal_distribution_charts.png (POST EXECUTION)
+- eda_visualizations.png (POST EXECUTION)
+
+
